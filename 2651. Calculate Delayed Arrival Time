@@ -1,0 +1,12 @@
+//Solution in java
+class Solution {
+    public int findDelayedArrivalTime(int arrivalTime, int delayedTime) {
+        int val=arrivalTime+delayedTime;
+        if(val>=24){
+            return (val-24);
+        }
+        else{
+            return val;
+        }
+    }
+}
