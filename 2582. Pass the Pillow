@@ -1,0 +1,23 @@
+//Solution in Java
+
+class Solution {
+    public int passThePillow(int n, int time) {
+        int pos=1;
+        boolean inc=true;
+        while(time-->0){
+            if(inc==true){
+                pos++;
+            }
+            else{
+                pos--;
+            }
+            if(pos==1){
+                inc=true;
+            }
+            if(pos==n){
+                inc=false;
+            }
+        }
+        return pos;
+    }
+}
