@@ -1,0 +1,25 @@
+//java solution
+
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        char[] arr1=s.toCharArray();
+        char[] arr2=t.toCharArray();
+        if(arr1.length!=arr2.length){
+            return false;
+        }
+        int[] freq1=new int[256];
+        for(int i=0;i<arr1.length;i++){
+            freq1[arr1[i]+65]++;
+        }
+        int[] freq2=new int[256];
+        for(int i=0;i<arr2.length;i++){
+            freq2[arr2[i]+65]++;
+        }
+        for(int i=0;i<freq1.length;i++){
+            if(freq1[i]!=freq2[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+}
