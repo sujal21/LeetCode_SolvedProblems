@@ -1,0 +1,22 @@
+//java solution
+
+class Solution {
+    public char findTheDifference(String s, String t) {
+        int ans=97;
+        int[] freq=new int[26];
+        char[] sarr=s.toCharArray();
+        for(int i=0;i<sarr.length;i++){
+            freq[sarr[i]-'a']++;
+        }
+        char[] tarr=t.toCharArray();
+        for(int i=0;i<tarr.length;i++){
+            freq[tarr[i]-'a']--;
+        }
+        for(int i=0;i<freq.length;i++){
+            if(freq[i]<0){
+                ans=i+97;
+            }
+        }
+        return (char) ans;
+    }
+}
