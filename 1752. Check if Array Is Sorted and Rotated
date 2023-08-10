@@ -1,0 +1,27 @@
+//java brute force solution
+
+class Solution {
+    public boolean check(int[] nums) {
+        int x=0;
+        int flag=1;
+        int [] temp=new int[nums.length];
+        while(x<=nums.length){
+            for(int i=0;i<nums.length;i++){
+                temp[i]=nums[(i+x)%nums.length];
+            }
+            for(int i=0;i<temp.length-1;i++){
+                if(temp[i]<=temp[i+1]){
+                    flag++;
+                }
+            }
+            if(flag==nums.length){
+                return true;
+            }
+            else{
+                flag=1;
+                x++;
+            }
+        }
+        return false;
+    }
+}
