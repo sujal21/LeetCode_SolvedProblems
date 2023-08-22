@@ -1,0 +1,33 @@
+class Solution {
+    private static boolean checkP(String str){
+        int start=0;
+        int end=str.length()-1;
+        while(start<=end){
+            if(str.charAt(start)!=str.charAt(end)){
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+
+    public String longestPalindrome(String s) {
+        String ans="";
+        int len=0;
+        int max=0;
+        for(int i=0;i<s.length();i++){
+            for(int j=i;j<s.length();j++){
+                String str=s.substring(i,j+1);
+                if(checkP(str)){
+                    len=str.length();
+                    if(len>max){
+                        max=len;
+                        ans=str;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+}
