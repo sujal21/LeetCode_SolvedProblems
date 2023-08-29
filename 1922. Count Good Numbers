@@ -1,0 +1,21 @@
+class Solution {
+    static long mod=1000000007;
+    public static long pow(long no,long p){
+        if(p==0){
+            return 1;
+        }
+        long temp=pow(no,p/2);
+        if(p%2==0){
+            return (temp*temp)%mod;
+        }else{
+            return (temp*temp*no)%mod;
+        }
+    }
+    public int countGoodNumbers(long n) {
+        long ev=(n+1)/2;
+        long pr=n/2;
+        
+        long ans=(pow(5,ev)*pow(4,pr))%mod;
+        return (int)ans;
+    }
+}
