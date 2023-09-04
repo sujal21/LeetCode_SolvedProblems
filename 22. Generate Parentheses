@@ -4,13 +4,7 @@ class Solution {
             list.add(ans);			
 			return;
 		}
-		if(o>n) {
-			return;
-		}
-		if(c>n) {
-			return;
-		}
-		if(o<c) {
+		if(o>n || c>n || o<c) {
 			return;
 		}
 		paranthesis(n,o+1,c,ans+"(",list);
