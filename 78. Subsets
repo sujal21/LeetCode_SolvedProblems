@@ -1,0 +1,31 @@
+class Solution {
+    public static List<List<Integer>> sub(int i,int[] nums,List<Integer> slist,List<List<Integer>> blist){
+        if(i==nums.length){
+            blist.add(new ArrayList<>(slist));
+            return blist;
+        }
+        slist.add(nums[i]);
+        sub(i+1,nums,slist,blist);
+        slist.remove(slist.size() - 1);
+        sub(i+1,nums,slist,blist);
+        return blist;
+    }
+    public List<List<Integer>> subsets(int[] nums) {
+        // List<List<Integer>> blist=new ArrayList<>();
+        // int n=nums.length;
+        // for(int i=0;i<(1<<n);i++){
+        //     List<Integer> slist=new ArrayList<>();
+        //     for(int j=0;j<n;j++){
+        //         if((i&(1<<j))!=0){
+        //             slist.add(nums[j]);
+        //         }
+        //     }
+        //     blist.add(slist);
+        // }
+        // return blist;
+        List<List<Integer>> blist=new ArrayList<>();
+        List<Integer> slist=new ArrayList<>();
+        sub(0,nums,slist,blist);
+        return blist;
+    }
+}
