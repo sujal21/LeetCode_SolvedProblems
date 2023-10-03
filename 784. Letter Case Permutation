@@ -1,0 +1,22 @@
+class Solution {
+    public static void letterPerm(String s,String ans,List<String> l){
+        if(s.length()==0){
+            l.add(ans);
+            return;
+        }
+        if(s.charAt(0)>='0' && s.charAt(0)<='9'){
+            String op=ans+s.charAt(0);
+            letterPerm(s.substring(1),op,l);
+        }else{
+            String op1=ans+Character.toLowerCase(s.charAt(0));
+            String op2=ans+Character.toUpperCase(s.charAt(0));
+            letterPerm(s.substring(1),op1,l);
+            letterPerm(s.substring(1),op2,l);
+        }
+    }
+    public List<String> letterCasePermutation(String s) {
+        List <String> l=new ArrayList<>();
+        letterPerm(s,"",l);
+        return l;
+    }
+}
