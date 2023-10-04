@@ -1,0 +1,24 @@
+public class Solution {
+    public static void solve(int idx, int[] arr, int target, List<List<Integer>> ans, List<Integer> lt) {
+        if(target == 0){
+            ans.add(new ArrayList<>(lt));
+            return;
+        }
+        if(idx == arr.length || target < 0){
+            return;
+        }
+        lt.add(arr[idx]);
+        solve(idx + 1, arr, target - arr[idx], ans, lt);
+        lt.remove(lt.size() - 1);
+        while (idx + 1 < arr.length && arr[idx] == arr[idx + 1]) {      //skip if next values are same
+            idx++;
+        }
+        solve(idx + 1, arr, target, ans, lt);
+    }
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates); // Sort the array to skip over same value
+        List<List<Integer>> ans = new ArrayList<>();
+        solve(0, candidates, target, ans, new ArrayList<>());
+        return ans;
+    }
+}
