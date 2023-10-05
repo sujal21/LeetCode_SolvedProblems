@@ -1,0 +1,23 @@
+class Solution {
+    public static void solve(int[] arr,int idx,int sum,int n,int k,List<List<Integer>> ans,List<Integer> lt){
+        if(sum>n || lt.size()>k) return;
+        if(idx==arr.length || sum==n){
+            if(lt.size()==k){
+                if(sum==n){
+                    ans.add(new ArrayList<>(lt));
+                }
+            }
+            return;
+        }
+        solve(arr,idx+1,sum,n,k,ans,lt);
+        lt.add(arr[idx]);
+        solve(arr,idx+1,sum+arr[idx],n,k,ans,lt);
+        lt.remove(lt.size()-1);
+    }
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> ans=new ArrayList<>();
+        int[] arr={1,2,3,4,5,6,7,8,9};
+        solve(arr,0,0,n,k,ans,new ArrayList<>());
+        return ans;
+    }
+}
