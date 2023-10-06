@@ -1,0 +1,32 @@
+class Solution {
+    public int[] nextGreaterElements(int[] nums) {
+        ArrayList<Integer> lt = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            boolean found = false;
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[j] > nums[i]) {
+                    lt.add(nums[j]);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                for (int k = 0; k < i; k++) {
+                    if (nums[k] > nums[i]) {
+                        lt.add(nums[k]);
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if (!found) {
+                lt.add(-1);
+            }
+        }
+        int[] arr = new int[lt.size()];
+        for (int i = 0; i < lt.size(); i++) {
+            arr[i] = lt.get(i);
+        }
+        return arr;
+    }
+}
