@@ -1,0 +1,43 @@
+class Solution {
+    public static List < String > construct(char[][] board) {
+        List < String > res = new LinkedList < String > ();
+        for (int i = 0; i < board.length; i++) {
+            String s = new String(board[i]);
+            res.add(s);
+        }
+        return res;
+    }
+    public static void solve(int col,List<List<String>> ans,char[][] board,int[] leftRow,int[] leftDiagonal,int[] rightDiagonal){
+        if(col==board.length){
+            ans.add(construct(board));
+            return;
+        }
+        for(int row=0;row<board.length;row++){
+            if(leftRow[row]==0 && leftDiagonal[row+col]==0 && rightDiagonal[board.length-1+row-col]==0){
+                board[row][col]='Q';
+                leftRow[row]=1;
+                leftDiagonal[row+col]=1;
+                rightDiagonal[board.length-1+row-col]=1;
+                solve(col+1,ans,board,leftRow,leftDiagonal,rightDiagonal);
+                board[row][col]='.';
+                leftRow[row]=0;
+                leftDiagonal[row+col]=0;
+                rightDiagonal[board.length-1+row-col]=0;
+            }
+        }
+    }
+    public List<List<String>> solveNQueens(int n) {
+        char[][] board=new char[n][n];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                board[i][j]='.';
+            }
+        }
+        List<List<String>> ans=new ArrayList<>();
+        int[] leftRow=new int[n];
+        int[] leftDiagonal=new int[2*n-1];
+        int[] rightDiagonal=new int[2*n-1];
+        solve(0,ans,board,leftRow,leftDiagonal,rightDiagonal);
+        return ans;
+    }
+}
