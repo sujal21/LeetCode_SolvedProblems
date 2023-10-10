@@ -1,0 +1,38 @@
+class Solution {
+    public static boolean solve(int idx, char[][] board, String word, int row, int col, boolean[][] visited) {
+        if (idx == word.length()) {
+            return true;  // Successfully matched the entire word.
+        }
+        if (col >= 0 && col < board[0].length && row >= 0 && row < board.length && !visited[row][col] && board[row][col] == word.charAt(idx)) {
+            char original = board[row][col];  // Store the original character.
+            visited[row][col] = true;
+
+            // Try exploring in all four directions.
+            boolean found = solve(idx + 1, board, word, row, col + 1, visited) ||
+                            solve(idx + 1, board, word, row + 1, col, visited) ||
+                            solve(idx + 1, board, word, row - 1, col, visited) ||
+                            solve(idx + 1, board, word, row, col - 1, visited);
+            visited[row][col] = false;  // Unmark the cell as visited.
+            return found;
+        }
+    return false;
+    }
+
+    public boolean exist(char[][] board, String word) {
+        int numRows = board.length;
+        int numCols = board[0].length;
+        boolean[][] visited = new boolean[numRows][numCols];
+
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numCols; col++) {
+                if (board[row][col] == word.charAt(0)) {
+                    if (solve(0, board, word, row, col, visited)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+}
