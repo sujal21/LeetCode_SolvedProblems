@@ -1,0 +1,43 @@
+import java.util.Stack;
+
+public class Solution {
+    public String removeKdigits(String num, int k) {
+        Stack<Character> st = new Stack<>();
+        int idx = 0;
+        int count = 0;
+
+        for (int i = 0; i < num.length(); i++) {
+            // Check if the current digit is smaller than the one on top of the stack.
+            while (!st.isEmpty() && st.peek() > num.charAt(i) && count < k) {
+                st.pop();
+                count++;
+            }
+            st.push(num.charAt(i));
+        }
+
+        // If k was not reached, remove remaining elements from the end.
+        while (count < k) {
+            st.pop();
+            count++;
+        }
+
+        // Convert the stack to a char array.
+        char[] arr = new char[st.size()];
+        for (int i = arr.length - 1; i >= 0; i--) {
+            arr[i] = st.pop();
+        }
+
+        // Handle leading zeros.
+        int point = 0;
+        int i = 0;
+        while (i < arr.length && arr[i] == '0') {
+            point++;
+            i++;
+        }
+        
+
+        // If the result is empty, return "0"; otherwise, return the converted string.
+        return ((arr.length - point) == 0) ? "0" : new String(arr, i, arr.length - i);
+    }
+
+}
