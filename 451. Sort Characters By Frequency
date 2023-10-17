@@ -1,0 +1,40 @@
+class Solution {
+    //pehle pair bana liya kyuki char or uski freq ko map krna hoga
+    class Pair{
+        char ch;
+        int count;
+        Pair(char ch,int count){
+            this.ch=ch;
+            this.count=count;
+        }
+    }
+    public String frequencySort(String s) {
+        int[] arr=new int[125];
+        //freq array banake store krli values
+        for(char c:s.toCharArray()){
+            arr[c]++;
+        }
+        //jinki value 0 se zyada hai unko list mein daal liya taaki freq wise sort kr sake
+        LinkedList<Pair> lt=new LinkedList<>();
+        for(int i=48;i<=122;i++){
+            if(arr[i]>0){
+                lt.add(new Pair((char)i,arr[i]));
+            }
+        }
+        //koi particular data structure ni hai toh comparator banake sort krna padega
+        Collections.sort(lt,new Comparator<Pair>(){
+            public int compare(Pair a,Pair b){
+                return b.count-a.count;
+            }
+        });
+        //jiski jitni freq hai usko utni baar string mein append krdo
+        StringBuilder sb=new StringBuilder();
+        for(Pair p:lt){
+            int count=p.count;
+            while(count-->0){
+                sb.append(p.ch);
+            }
+        }
+        return sb.toString();
+    }
+}
