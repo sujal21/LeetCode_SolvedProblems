@@ -1,0 +1,29 @@
+class Solution {
+    public int minBitFlips(int start, int goal) {
+        // int count=0;
+        // String s=Integer.toBinaryString(start);
+        // String g=Integer.toBinaryString(goal);
+
+        // int maxLen = Math.max(s.length(), g.length());
+        
+        // // Pad the shorter binary representation with leading zeros
+        // s = String.format("%" + maxLen + "s", s).replace(' ', '0');
+        // g = String.format("%" + maxLen + "s", g).replace(' ', '0');
+
+        // for(int i=0;i<s.length();i++){
+        //     if(s.charAt(i)!=g.charAt(i)){
+        //         count++;
+        //     }
+        // }
+        // return count;
+        int count=0;
+        int num=start^goal; //xor krke jitne set bits aayenge utni baar flip krna padega toh set bits count krlo
+        while(num!=0){
+            if((num&1)==1){
+                count++;
+            }
+            num=num>>1;
+        }
+        return count;
+    }
+}
