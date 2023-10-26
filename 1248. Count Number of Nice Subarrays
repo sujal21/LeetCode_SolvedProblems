@@ -1,0 +1,22 @@
+class Solution {
+    public static int solve(int[] nums,int k){
+        int l=0,r=0,ans=0;
+        while(r<nums.length){
+            if(nums[r]%2!=0){
+                k--;
+            }
+            while(k<0){
+                if(nums[l]%2!=0){
+                    k++;
+                }
+                l++;
+            }
+            ans=ans+(r-l+1);
+            r++;
+        }
+        return ans;
+    }
+    public int numberOfSubarrays(int[] nums, int k) {
+        return solve(nums,k) - solve(nums,k-1);
+    }
+}
