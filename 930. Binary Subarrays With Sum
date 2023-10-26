@@ -1,0 +1,19 @@
+class Solution {
+    public static int solve(int[] nums,int goal){
+        int l=0,r=0,sum=0,ans=0;
+        while(r<nums.length){
+            sum=sum+nums[r];
+            while(sum>goal && l<=r){
+                sum=sum-nums[l];
+                l++;
+            }
+            ans=ans+(r-l+1);
+            r++;
+        }
+        return ans;
+    }
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        int ans=solve(nums,goal)-solve(nums,goal-1);
+        return ans;
+    }
+}
