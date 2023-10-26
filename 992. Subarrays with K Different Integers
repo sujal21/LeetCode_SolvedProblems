@@ -1,0 +1,25 @@
+class Solution {
+    public static int solve(int[] nums,int k){
+        int l = 0, r = 0, ans = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        while (r < nums.length) {
+            int val=nums[r];
+            map.put(val, map.getOrDefault(val, 0) + 1);
+            while (map.size() > k) {
+                int leftval = nums[l];
+                map.put(leftval, map.get(leftval) - 1);
+                if (map.get(leftval) == 0) {
+                    map.remove(leftval);
+                }
+                l++;
+            }
+            ans = ans+(r-l+1);
+            r++;
+        }
+        return ans;
+    }
+    
+    public int subarraysWithKDistinct(int[] nums, int k) {
+        return solve(nums,k)-solve(nums,k-1);
+    }
+}
