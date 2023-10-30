@@ -1,0 +1,42 @@
+class Solution {
+    public void maxHeapify(int[] arr, int i, int heapSize) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < heapSize && arr[left] > arr[largest]) {
+            largest = left;
+        }
+
+        if (right < heapSize && arr[right] > arr[largest]) {
+            largest = right;
+        }
+
+        if (largest != i) {
+            int temp = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = temp;
+            maxHeapify(arr, largest, heapSize);
+        }
+    }
+
+    public int findKthLargest(int[] nums, int k) {
+        int heapSize = nums.length;
+
+        // Convert the array into a max heap in-place
+        for (int i = heapSize / 2 - 1; i >= 0; i--) {
+            maxHeapify(nums, i, heapSize);
+        }
+
+        // Extract K times the max element without explicitly building a separate heap
+        for (int i = 0; i < k - 1; i++) {
+            int temp = nums[0];
+            nums[0] = nums[heapSize - 1];
+            nums[heapSize - 1] = temp;
+            heapSize--;
+            maxHeapify(nums, 0, heapSize);
+        }
+
+        return nums[0];
+    }
+}
