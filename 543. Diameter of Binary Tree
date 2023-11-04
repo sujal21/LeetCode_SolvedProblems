@@ -1,0 +1,33 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int ans=0;
+    private int solve(TreeNode root){
+        if (root == null) {
+            return 0;
+        }
+        int lDepth = solve(root.left);
+        int rDepth = solve(root.right);
+        if(lDepth+rDepth>ans){
+            ans=lDepth+rDepth;
+        }
+        return (int)1+Math.max(lDepth, rDepth);
+    }
+    public int diameterOfBinaryTree(TreeNode root) {
+        solve(root);
+        return ans;
+    }
+}
