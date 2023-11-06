@@ -1,0 +1,60 @@
+/*********************************************
+
+ Following is the TreeNode class structure
+
+ class TreeNode {
+     int data;
+     TreeNode left;
+     TreeNode right;
+
+     TreeNode(int data) {
+         this.data = data;
+         this.left = null;
+         this.right = null;
+     }
+ }
+
+ *********************************************/
+
+import java.util.*;
+
+class Point{
+    TreeNode root;
+    int x;
+    public Point(TreeNode root,int x){
+        this.root=root;
+        this.x=x;
+    }
+}
+public class Solution {
+    public static List<Integer> getTopView(TreeNode root) {
+        // Write your code here.
+        List<Integer> lt=new ArrayList<>();
+        if(root==null){
+            return lt;
+        }
+        Map<Integer,Integer> map=new TreeMap<>();
+        Queue<Point> q=new LinkedList<>();
+        q.add(new Point(root,0));
+
+        while(!q.isEmpty()){
+            Point curr=q.poll();
+            TreeNode newRoot=curr.root;
+            int pos=curr.x;
+
+            if(!map.containsKey(pos)){
+                map.put(pos,newRoot.data);
+            }
+            if(newRoot.left!=null){
+                q.add(new Point(newRoot.left,pos-1));
+            }
+            if(newRoot.right!=null){
+                q.add(new Point(newRoot.right,pos+1));
+            }
+        }
+        for(int i:map.values()){
+            lt.add(i);
+        }
+        return lt;
+    }
+}
