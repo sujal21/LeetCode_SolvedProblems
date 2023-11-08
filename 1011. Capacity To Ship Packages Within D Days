@@ -1,0 +1,31 @@
+class Solution {
+    public static int isPossible(int[] arr,int cap){
+        int day=1;int load=0;
+        for(int i=0;i<arr.length;i++){
+            if(load+arr[i]<=cap){
+                load+=arr[i];
+            }else{
+                load=arr[i];
+                day++;
+            }
+        }
+        return day;
+    }
+    public int shipWithinDays(int[] weights, int days) {
+        int low=Integer.MIN_VALUE,high=0;
+        for(int i=0;i<weights.length;i++){
+            low=(int)Math.max(low,weights[i]);
+            high=high+weights[i];
+        }
+        while(low<=high){
+            int mid=(low+high)/2;
+            int daysReq=isPossible(weights,mid);
+            if(daysReq<=days){
+                high=mid-1;
+            }else{
+                low=mid+1;
+            }
+        }
+        return low;
+    }
+}
