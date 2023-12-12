@@ -1,0 +1,18 @@
+class Solution {
+    public static int money(int idx,int[] t,int[] nums){
+        if(idx<0){
+            return 0;
+        }
+        if(t[idx]!=-1){
+            return t[idx];
+        }
+        t[idx]=Math.max(nums[idx]+money(idx-2,t,nums),money(idx-1,t,nums));
+        return t[idx];
+    }
+    public int rob(int[] nums) {
+        int n=nums.length;
+        int[] t=new int[n];
+        Arrays.fill(t,-1);
+        return money(n-1,t,nums);
+    }
+}
