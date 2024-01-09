@@ -1,0 +1,19 @@
+class Solution {
+    public int maxProduct(int[] nums) {
+       int leftProd=1;
+       int rightProd=1;
+       int ans=nums[0];
+       for(int i=0;i<nums.length;i++){
+           if(leftProd==0){
+               leftProd=1;
+           }
+           if(rightProd==0){
+               rightProd=1;
+           }
+           leftProd=leftProd*nums[i];
+           rightProd=rightProd*nums[nums.length-1-i];
+           ans=Math.max(ans,Math.max(leftProd,rightProd));
+       }
+       return ans;
+    }
+}
