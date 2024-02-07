@@ -1,0 +1,42 @@
+class Solution {
+    static int mod=(int)Math.pow(10,9)+7;
+
+    public int findWays(int[] arr,int sum){
+        int n=arr.length;
+        int[][] dp=new int[n][sum+1];
+
+        if(arr[0]==0){
+            dp[0][0]=2;
+        }else{
+            dp[0][0]=1;
+        }
+
+        if(arr[0]!=0 && arr[0]<=sum){
+            dp[0][arr[0]]=1;
+        }
+
+        for(int i=1;i<n;i++){
+            for(int j=0;j<=sum;j++){
+                int notTaken=dp[i-1][j];
+                int taken=0;
+                if(arr[i]<=j){
+                    taken=dp[i-1][j-arr[i]];
+                }
+                dp[i][j]=(taken+notTaken)%mod;
+            }
+        }
+        return dp[n-1][sum];
+    }
+
+    public int findTargetSumWays(int[] nums, int target) {
+        int len=nums.length;
+        int totSum=0;
+        for(int i=0;i<nums.length;i++){
+            totSum=totSum+nums[i];
+        }
+        if(totSum-target<0 || (totSum-target)%2==1){
+            return 0;
+        }
+        return findWays(nums,(totSum-target)/2);
+    }
+}
