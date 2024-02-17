@@ -1,0 +1,52 @@
+public class Solution {
+    Comparator<String> comp = (s1, s2) -> s1.length() - s2.length();
+
+    public boolean isPossible(String s1, String s2) {
+        if (Math.abs(s1.length() - s2.length()) != 1) {
+            return false;
+        }
+
+        int i = 0;
+        int j = 0;
+        int diffCount = 0;
+
+        while (i < s1.length() && j < s2.length()) {
+            if (s1.charAt(i) == s2.charAt(j)) {
+                i++;
+                j++;
+            } else {
+                diffCount++;
+                if (diffCount > 1) {
+                    return false;
+                }
+                i++;
+            }
+        }
+
+        return true;
+    }
+
+    public int longestStrChain(String[] words) {
+        if (words.length <= 1) {
+            return words.length;
+        }
+
+        Arrays.sort(words, comp);
+
+        int[] dp = new int[words.length];
+        Arrays.fill(dp, 1);
+
+        int maxLength = 1;
+
+        for (int i = 0; i < words.length; i++) {
+            for (int prev = 0; prev < i; prev++) {
+                if (isPossible(words[i], words[prev])) {
+                    dp[i] = Math.max(dp[i], dp[prev] + 1);
+                }
+            }
+            maxLength = Math.max(maxLength, dp[i]);
+        }
+
+        return maxLength;
+    }
+}
