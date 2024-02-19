@@ -1,0 +1,58 @@
+class Solution {
+//     public int solve(int[] arr, int i, int j,int[][] dp) {
+//         if (i > j) {
+//             return 0;
+//         }
+//         if(dp[i][j]!=-1){
+//             return dp[i][j];
+//         }
+//         int maxi = Integer.MIN_VALUE;
+//         for (int idx = i; idx <= j; idx++) {
+//             int cost = arr[i - 1] * arr[idx] * arr[j + 1] + solve(arr, i, idx - 1,dp) + solve(arr, idx + 1, j,dp);
+//             maxi = Math.max(maxi, cost);
+//         }
+//         return dp[i][j]=maxi;
+//     }
+
+//     public int maxCoins(int[] nums) {
+//         int b = nums.length;
+//         int[] arr = new int[b + 2];
+//         arr[0] = 1;
+//         arr[arr.length - 1] = 1;
+//         for (int i = 1; i <= b; i++) {
+//             arr[i] = nums[i-1];
+//         }
+//         int[][] dp=new int[b+1][b+1];
+//         for(int[] row:dp){
+//             Arrays.fill(row,-1);
+//         }
+//         return solve(arr, 1, b,dp);
+//     }
+// }
+
+class Solution {
+    public int maxCoins(int[] nums) {
+        int b=nums.length;
+        int[] arr=new int[b+2];
+        arr[0]=1;
+        arr[arr.length-1]=1;
+        for(int i=1;i<=b;i++){
+            arr[i]=nums[i-1];
+        }
+        int[][] dp=new int[b+2][b+2];
+        for(int i=b;i>=1;i--){
+            for(int j=1;j<=b;j++){
+                if(i>j){
+                    continue;
+                }
+                int maxi=Integer.MIN_VALUE;
+                for(int idx=i;idx<=j;idx++){
+                    int coins=arr[i-1]*arr[idx]*arr[j+1]+dp[i][idx-1]+dp[idx+1][j];
+                    maxi=Math.max(maxi,coins);
+                }
+                dp[i][j]=maxi;
+            }
+        }
+        return dp[1][b];
+    }
+}
