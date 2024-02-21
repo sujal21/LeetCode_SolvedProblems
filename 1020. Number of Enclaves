@@ -1,0 +1,51 @@
+class Solution {
+    public void dfs(int r,int c,int[][] grid,int[][] vis,int[] rows,int[] cols){
+        vis[r][c]=1;
+
+        for(int i=0;i<4;i++){
+            int nrow=r+rows[i];
+            int ncol=c+cols[i];
+            if(nrow<grid.length && nrow>=0 && ncol<grid[0].length && ncol>=0 && vis[nrow][ncol]==0 && grid[nrow][ncol]==1){
+                dfs(nrow,ncol,grid,vis,rows,cols);
+            }
+        }
+    }
+    public int numEnclaves(int[][] grid) {
+        int n=grid.length;
+        int m=grid[0].length;
+
+        int[][] vis=new int[n][m];
+        int[] rows={-1,0,+1,0};
+        int[] cols={0,+1,0,-1};
+
+        for(int i=0;i<m;i++){
+            if(vis[0][i]==0 && grid[0][i]==1){
+                dfs(0,i,grid,vis,rows,cols);
+            }
+
+            if(vis[n-1][i]==0 && grid[n-1][i]==1){
+                dfs(n-1,i,grid,vis,rows,cols);
+            }
+        }
+
+        for(int i=0;i<n;i++){
+            if(vis[i][0]==0 && grid[i][0]==1){
+                dfs(i,0,grid,vis,rows,cols);
+            }
+
+            if(vis[i][m-1]==0 && grid[i][m-1]==1){
+                dfs(i,m-1,grid,vis,rows,cols);
+            }
+        }
+
+        int count=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(vis[i][j]==0 && grid[i][j]==1){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+}
