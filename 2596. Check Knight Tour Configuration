@@ -1,0 +1,58 @@
+class Pair {
+    int row;
+    int col;
+    int val;
+    int prev;
+
+    Pair(int row, int col, int val, int prev) {
+        this.row = row;
+        this.col = col;
+        this.val = val;
+        this.prev = prev;
+    }
+}
+
+class Solution {
+    public boolean checkValidGrid(int[][] grid) {
+        int[][] vis = new int[grid.length][grid[0].length];
+
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(0, 0, 0, -1));
+
+        while (!q.isEmpty()) {
+            int r = q.peek().row;
+            int c = q.peek().col;
+            int v = q.peek().val;
+            int p = q.peek().prev;
+            q.remove();
+
+            if (v != p + 1) {
+                return false;
+            }
+
+            vis[r][c] = 1;
+
+            int[] rows = {-2, -2, -1, +1, +2, +2, -1, +1};
+            int[] cols = {-1, +1, +2, +2, -1, +1, -2, -2};
+
+            for (int i = 0; i < 8; i++) {
+                int nrow = r + rows[i];
+                int ncol = c + cols[i];
+
+                if (nrow >= 0 && nrow < grid.length && ncol >= 0 && ncol < grid[0].length
+                        && vis[nrow][ncol] == 0 && grid[nrow][ncol] == v + 1) {
+                    q.add(new Pair(nrow, ncol, v + 1, v));
+                }
+            }
+        }
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (vis[i][j] == 0) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+}
