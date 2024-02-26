@@ -1,0 +1,50 @@
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
+        for(int i=0;i<numCourses;i++){
+            adj.add(new ArrayList<>());
+        }
+
+        for(int i=0;i<prerequisites.length;i++){
+            int from=prerequisites[i][1];
+            int to=prerequisites[i][0];
+
+            adj.get(from).add(to);
+        }
+
+        int[] indegree=new int[numCourses];
+        for(int i=0;i<numCourses;i++){
+            for(Integer it:adj.get(i)){
+                indegree[it]++;
+            }
+        }
+
+        Queue<Integer> q=new LinkedList<>();
+        for(int i=0;i<numCourses;i++){
+            if(indegree[i]==0){
+                q.add(i);
+            }
+        }
+
+        int idx=0;
+        int[] ans=new int[numCourses];
+        while(!q.isEmpty()){
+            int node=q.poll();
+            ans[idx]=node;
+
+            for(Integer it:adj.get(node)){
+                indegree[it]--;
+                if(indegree[it]==0){
+                    q.add(it);
+                }
+            }
+            idx++;
+        }
+
+        if(idx==numCourses){
+            return ans;
+        }
+        int[] arr={};
+        return arr;
+    }
+}
