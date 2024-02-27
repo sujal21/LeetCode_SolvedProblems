@@ -1,0 +1,54 @@
+class Values{
+    int dist;
+    int row;
+    int col;
+    Values(int dist,int row,int col){
+        this.dist=dist;
+        this.row=row;
+        this.col=col;
+    }
+}
+class Solution {
+    public int minimumEffortPath(int[][] heights) {
+        int n=heights.length;
+        int m=heights[0].length;
+        int[][] dist=new int[n][m];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                dist[i][j]=Integer.MAX_VALUE;
+            }
+        }
+
+        PriorityQueue<Values> pq=new PriorityQueue<Values>((x,y)->x.dist-y.dist);
+        dist[0][0]=0;
+        pq.add(new Values(0,0,0));
+
+        int[] rows={-1,0,+1,0};
+        int[] cols={0,+1,0,-1};
+
+        while(!pq.isEmpty()){
+            int diff=pq.peek().dist;
+            int r=pq.peek().row;
+            int c=pq.peek().col;
+            pq.poll();
+
+            if(r==n-1 && c==m-1){
+                return diff;
+            }
+
+            for(int i=0;i<4;i++){
+                int nrow=r+rows[i];
+                int ncol=c+cols[i];
+
+                if(nrow<n && nrow>=0 && ncol<m && ncol>=0){
+                    int effort=Math.max(Math.abs(heights[r][c]-heights[nrow][ncol]),diff);
+                    if(effort<dist[nrow][ncol]){
+                        dist[nrow][ncol]=effort;
+                        pq.add(new Values(effort,nrow,ncol));
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+}
