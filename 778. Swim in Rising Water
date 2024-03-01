@@ -1,0 +1,76 @@
+class Tuple {
+    int row;
+    int col;
+    int dist;
+
+    Tuple(int row, int col, int dist) {
+        this.row = row;
+        this.col = col;
+        this.dist = dist;
+    }
+}
+
+class Solution {
+    public int swimInWater(int[][] grid) {
+        int n = grid.length;
+        int left = 0;
+        int right = n * n - 1;
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+
+            if (canReach(grid, mid)) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        return left;
+    }
+
+    private boolean canReach(int[][] grid, int time) {
+        int n = grid.length;
+        int[][] dist = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                dist[i][j] = Integer.MAX_VALUE;
+            }
+        }
+
+        dist[0][0] = grid[0][0];
+
+        PriorityQueue<Tuple> pq = new PriorityQueue<>((x, y) -> x.dist - y.dist);
+        pq.add(new Tuple(0, 0, dist[0][0]));
+
+        int[] rows={-1,0,+1,0};
+        int[] cols={0,+1,0,-1};
+
+        while (!pq.isEmpty()) {
+            Tuple p = pq.poll();
+            int row = p.row;
+            int col = p.col;
+            int cost = p.dist;
+
+            if (row == n - 1 && col == n - 1) {
+                return true;
+            }
+
+            for (int i = 0; i < 4; i++) {
+                int nrow = row + rows[i];
+                int ncol = col + cols[i];
+
+                if (isValid(nrow, ncol, n) && Math.max(cost, grid[nrow][ncol]) <= time && Math.max(cost, grid[nrow][ncol]) < dist[nrow][ncol]) {
+                    dist[nrow][ncol] = Math.max(cost, grid[nrow][ncol]);
+                    pq.add(new Tuple(nrow, ncol, dist[nrow][ncol]));
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean isValid(int row, int col, int n) {
+        return row >= 0 && row < n && col >= 0 && col < n;
+    }
+}
