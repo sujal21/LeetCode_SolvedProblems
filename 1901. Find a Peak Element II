@@ -1,0 +1,38 @@
+class Solution {
+    public int solve(int[][] mat, int n, int mid) {
+        int maxi = -1;
+        int idx = -1;
+        for (int i = 0; i < n; i++) {
+            if (mat[i][mid] > maxi) {
+                maxi = mat[i][mid];
+                idx = i;
+            }
+        }
+        return idx;
+    }
+
+    public int[] findPeakGrid(int[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+        int[] ans = {-1, -1};
+
+        int low = 0;
+        int high = m - 1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            int maxRowIdx = solve(mat, n, mid);
+            int left = mid - 1 >= 0 ? mat[maxRowIdx][mid - 1] : -1;
+            int right = mid + 1 < m ? mat[maxRowIdx][mid + 1] : -1;
+            if (mat[maxRowIdx][mid] > left && mat[maxRowIdx][mid] > right) {
+                ans[0] = maxRowIdx;
+                ans[1] = mid;
+                return ans;
+            } else if (mat[maxRowIdx][mid] < left) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+}
