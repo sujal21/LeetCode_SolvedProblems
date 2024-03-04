@@ -1,0 +1,21 @@
+class Solution {
+    public String countAndSay(int n) {
+        if(n==1){
+            return "1";
+        }
+
+        String next=countAndSay(n-1);
+        String res="";
+
+        for(int i=0;i<next.length();i++){
+            int count=1;
+            char ch=next.charAt(i);
+            while(i<next.length()-1 && next.charAt(i)==next.charAt(i+1)){
+                count++;
+                i++;
+            }
+            res+=String.valueOf(count)+String.valueOf(ch);
+        }
+        return res;
+    }
+}
