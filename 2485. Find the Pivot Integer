@@ -1,0 +1,25 @@
+class Solution {
+    public int pivotInteger(int n) {
+        int[] presum=new int[n];
+        int[] suffsum=new int[n];
+        int[] arr=new int[n];
+        for(int i=0;i<n;i++){
+            arr[i]=i+1;
+        }
+        presum[0]=1;
+        for(int i=1;i<n;i++){
+            presum[i]=presum[i-1]+arr[i];
+        }
+        suffsum[n-1]=n;
+        for(int i=n-2;i>=0;i--){
+            suffsum[i]=suffsum[i+1]+arr[i];
+        }
+
+        for(int i=0;i<n;i++){
+            if(presum[i]==suffsum[i]){
+                return i+1;
+            }
+        }
+        return -1;
+    }
+}
